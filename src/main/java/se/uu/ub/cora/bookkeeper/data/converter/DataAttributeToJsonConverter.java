@@ -20,30 +20,27 @@
 package se.uu.ub.cora.bookkeeper.data.converter;
 
 import se.uu.ub.cora.bookkeeper.data.DataAttribute;
+import se.uu.ub.cora.bookkeeper.data.DataPart;
 import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.json.builder.JsonObjectBuilder;
 
 public final class DataAttributeToJsonConverter extends DataToJsonConverter {
 	private JsonBuilderFactory factory;
-	private DataAttribute dataAttribute;
 
-	public static DataToJsonConverter usingJsonFactoryForDataAttribute(JsonBuilderFactory factory,
-			DataAttribute dataAttribute) {
-		return new DataAttributeToJsonConverter(factory, dataAttribute);
+	public static DataToJsonConverter usingJsonFactory(JsonBuilderFactory factory) {
+		return new DataAttributeToJsonConverter(factory);
 	}
 
-	private DataAttributeToJsonConverter(JsonBuilderFactory factory,
-			DataAttribute dataAttribute) {
+	private DataAttributeToJsonConverter(JsonBuilderFactory factory) {
 		this.factory = factory;
-		this.dataAttribute = dataAttribute;
 	}
 
 	@Override
-	JsonObjectBuilder toJsonObjectBuilder() {
+	JsonObjectBuilder toJsonObjectBuilder(DataPart dataAttributeIn) {
+		DataAttribute dataAttribute = (DataAttribute) dataAttributeIn;
 		JsonObjectBuilder jsonObjectBuilder = factory.createObjectBuilder();
 
-		jsonObjectBuilder.addKeyString(dataAttribute.getNameInData(),
-				dataAttribute.getValue());
+		jsonObjectBuilder.addKeyString(dataAttribute.getNameInData(), dataAttribute.getValue());
 		return jsonObjectBuilder;
 	}
 

@@ -28,25 +28,25 @@ import se.uu.ub.cora.json.builder.JsonArrayBuilder;
 import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.json.builder.JsonObjectBuilder;
 
-public final class DataGroupToJsonConverter extends DataToJsonConverter {
+public class DataGroupToJsonConverter extends DataToJsonConverter {
 
 	private DataGroup dataGroup;
 	private JsonObjectBuilder dataGroupJsonObjectBuilder;
 	private JsonBuilderFactory jsonBuilderFactory;
 
-	public static DataGroupToJsonConverter usingJsonFactoryForDataGroup(JsonBuilderFactory factory,
-			DataGroup dataGroup) {
-		return new DataGroupToJsonConverter(factory, dataGroup);
+	public static DataGroupToJsonConverter usingJsonFactoryForDataGroup(
+			JsonBuilderFactory factory) {
+		return new DataGroupToJsonConverter(factory);
 	}
 
-	private DataGroupToJsonConverter(JsonBuilderFactory factory, DataGroup dataGroup) {
+	protected DataGroupToJsonConverter(JsonBuilderFactory factory) {
 		this.jsonBuilderFactory = factory;
-		this.dataGroup = dataGroup;
 		dataGroupJsonObjectBuilder = factory.createObjectBuilder();
 	}
 
 	@Override
-	JsonObjectBuilder toJsonObjectBuilder() {
+	JsonObjectBuilder toJsonObjectBuilder(DataPart dataGroup) {
+		this.dataGroup = (DataGroup) dataGroup;
 		possiblyAddRepeatId();
 		if (hasAttributes()) {
 			addAttributesToGroup();
@@ -89,8 +89,9 @@ public final class DataGroupToJsonConverter extends DataToJsonConverter {
 		JsonArrayBuilder childrenArray = jsonBuilderFactory.createArrayBuilder();
 		for (DataElement dataElement : dataGroup.getChildren()) {
 			DataPart dataPart = (DataPart) dataElement;
-			childrenArray.addJsonObjectBuilder(dataToJsonConverterFactory
-					.createForDataElement(jsonBuilderFactory, dataPart).toJsonObjectBuilder());
+			childrenArray.addJsonObjectBuilder(
+					dataToJsonConverterFactory.createForDataElement(jsonBuilderFactory, dataPart)
+							.toJsonObjectBuilder(dataPart));
 		}
 		dataGroupJsonObjectBuilder.addKeyJsonArrayBuilder("children", childrenArray);
 	}

@@ -31,22 +31,20 @@ import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.json.builder.org.OrgJsonBuilderFactoryAdapter;
 
 public class DataGroupToJsonConverterTest {
-	private DataToJsonConverterFactory dataToJsonConverterFactory;
 	private JsonBuilderFactory factory;
 	private DataGroup dataGroup;
 
 	@BeforeMethod
 	public void beforeMethod() {
-		dataToJsonConverterFactory = new DataToJsonConverterFactoryImp();
 		factory = new OrgJsonBuilderFactoryAdapter();
 		dataGroup = DataGroup.withNameInData("groupNameInData");
 	}
 
 	@Test
 	public void testToJson() {
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 		String expectedJson = "{\"name\": \"groupNameInData\"}";
 		assertEquals(json, expectedJson);
 	}
@@ -54,9 +52,9 @@ public class DataGroupToJsonConverterTest {
 	@Test
 	public void testToJsonWithRepeatId() {
 		dataGroup.setRepeatId("4");
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 
 		String expectedJson = "{\n";
 		expectedJson += "    \"repeatId\": \"4\",\n";
@@ -69,9 +67,9 @@ public class DataGroupToJsonConverterTest {
 	@Test
 	public void testToJsonWithEmptyRepeatId() {
 		dataGroup.setRepeatId("");
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 
 		String expectedJson = "{\"name\": \"groupNameInData\"}";
 		assertEquals(json, expectedJson);
@@ -81,9 +79,9 @@ public class DataGroupToJsonConverterTest {
 	public void testToJsonGroupWithAttribute() {
 		dataGroup.addAttributeByIdWithValue("attributeNameInData", "attributeValue");
 
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 		String expectedJson = "{\n";
 		expectedJson += "    \"name\": \"groupNameInData\",\n";
 		expectedJson += "    \"attributes\": {\"attributeNameInData\": \"attributeValue\"}\n";
@@ -96,9 +94,9 @@ public class DataGroupToJsonConverterTest {
 		dataGroup.addAttributeByIdWithValue("attributeNameInData", "attributeValue");
 		dataGroup.addAttributeByIdWithValue("attributeNameInData2", "attributeValue2");
 
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 		String expectedJson = "{\n";
 		expectedJson += "    \"name\": \"groupNameInData\",\n";
 		expectedJson += "    \"attributes\": {\n";
@@ -113,9 +111,9 @@ public class DataGroupToJsonConverterTest {
 	public void testToJsonGroupWithAtomicChild() {
 		dataGroup.addChild(DataAtomic.withNameInDataAndValue("atomicNameInData", "atomicValue"));
 
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 		String expectedJson = "{\n";
 		expectedJson += "    \"children\": [{\n";
 		expectedJson += "        \"name\": \"atomicNameInData\",\n";
@@ -135,9 +133,9 @@ public class DataGroupToJsonConverterTest {
 
 		dataGroup2.addChild(DataAtomic.withNameInDataAndValue("atomicNameInData2", "atomicValue2"));
 
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 
 		String expectedJson = "{\n";
 		expectedJson += "    \"children\": [\n";
@@ -178,9 +176,9 @@ public class DataGroupToJsonConverterTest {
 
 		dataGroup2.addChild(DataAtomic.withNameInDataAndValue("atomicNameInData2", "atomicValue2"));
 
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataGroup);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataGroupToJsonConverter
+				.usingJsonFactoryForDataGroup(factory);
+		String json = dataToJsonConverter.toJson(dataGroup);
 		String expectedJson = "{\n";
 		expectedJson += "    \"children\": [\n";
 		expectedJson += "        {\n";

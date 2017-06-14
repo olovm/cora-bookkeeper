@@ -29,12 +29,10 @@ import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.json.builder.org.OrgJsonBuilderFactoryAdapter;
 
 public class DataAttributeToJsonConverterTest {
-	private DataToJsonConverterFactory dataToJsonConverterFactory;
 	private JsonBuilderFactory factory;
 
 	@BeforeMethod
 	public void beforeMethod() {
-		dataToJsonConverterFactory = new DataToJsonConverterFactoryImp();
 		factory = new OrgJsonBuilderFactoryAdapter();
 
 	}
@@ -43,9 +41,9 @@ public class DataAttributeToJsonConverterTest {
 	public void testToJson() {
 		DataAttribute dataAttribute = DataAttribute.withNameInDataAndValue("attributeNameInData",
 				"attributeValue");
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataAttribute);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataAttributeToJsonConverter
+				.usingJsonFactory(factory);
+		String json = dataToJsonConverter.toJson(dataAttribute);
 
 		Assert.assertEquals(json, "{\"attributeNameInData\": \"attributeValue\"}");
 	}
@@ -54,9 +52,9 @@ public class DataAttributeToJsonConverterTest {
 	public void testToJsonEmptyValue() {
 		DataAttribute dataAttribute = DataAttribute.withNameInDataAndValue("attributeNameInData",
 				"");
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
-				.createForDataElement(factory, dataAttribute);
-		String json = dataToJsonConverter.toJson();
+		DataToJsonConverter dataToJsonConverter = DataAttributeToJsonConverter
+				.usingJsonFactory(factory);
+		String json = dataToJsonConverter.toJson(dataAttribute);
 
 		Assert.assertEquals(json, "{\"attributeNameInData\": \"\"}");
 	}

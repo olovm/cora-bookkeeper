@@ -158,7 +158,6 @@ public class DataGroupToMetadataChildReferenceConverterTest {
 
 		dataGroup.addChild(DataAtomic.withNameInDataAndValue("repeatMin", "0"));
 		dataGroup.addChild(DataAtomic.withNameInDataAndValue("repeatMax", "16"));
-		DataGroup ref = dataGroup.getFirstGroupWithNameInData("ref");
 
 		DataGroup childRefSearchTerm = createSearchTermWithId("titleSearchTerm");
 		dataGroup.addChild(childRefSearchTerm);

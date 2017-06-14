@@ -20,7 +20,6 @@
 package se.uu.ub.cora.bookkeeper.data.converter;
 
 import se.uu.ub.cora.bookkeeper.data.DataAtomic;
-import se.uu.ub.cora.bookkeeper.data.DataAttribute;
 import se.uu.ub.cora.bookkeeper.data.DataGroup;
 import se.uu.ub.cora.bookkeeper.data.DataPart;
 import se.uu.ub.cora.json.builder.JsonBuilderFactory;
@@ -31,14 +30,11 @@ public class DataToJsonConverterFactoryImp implements DataToJsonConverterFactory
 	public DataToJsonConverter createForDataElement(JsonBuilderFactory factory, DataPart dataPart) {
 
 		if (dataPart instanceof DataGroup) {
-			return DataGroupToJsonConverter.usingJsonFactoryForDataGroup(factory,
-					(DataGroup) dataPart);
+			return DataGroupToJsonConverter.usingJsonFactoryForDataGroup(factory);
 		}
 		if (dataPart instanceof DataAtomic) {
-			return DataAtomicToJsonConverter.usingJsonFactoryForDataAtomic(factory,
-					(DataAtomic) dataPart);
+			return DataAtomicToJsonConverter.usingJsonFactory(factory);
 		}
-		return DataAttributeToJsonConverter.usingJsonFactoryForDataAttribute(factory,
-				(DataAttribute) dataPart);
+		return DataAttributeToJsonConverter.usingJsonFactory(factory);
 	}
 }

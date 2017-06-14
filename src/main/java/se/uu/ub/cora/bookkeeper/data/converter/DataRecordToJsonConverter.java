@@ -30,8 +30,8 @@ public final class DataRecordToJsonConverter {
 	private DataRecord dataRecord;
 	private JsonObjectBuilder recordJsonObjectBuilder;
 
-	public static DataRecordToJsonConverter usingJsonFactoryForDataRecord(JsonBuilderFactory jsonFactory,
-			DataRecord dataRecord) {
+	public static DataRecordToJsonConverter usingJsonFactoryForDataRecord(
+			JsonBuilderFactory jsonFactory, DataRecord dataRecord) {
 		return new DataRecordToJsonConverter(jsonFactory, dataRecord);
 	}
 
@@ -53,9 +53,10 @@ public final class DataRecordToJsonConverter {
 
 	private void convertMainDataGroup() {
 		DataToJsonConverterFactory dataToJsonConverterFactory = new DataToJsonConverterFactoryImp();
-		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory.createForDataElement(jsonBuilderFactory,
-				dataRecord.getDataGroup());
-		JsonObjectBuilder jsonDataGroupObjectBuilder = dataToJsonConverter.toJsonObjectBuilder();
+		DataToJsonConverter dataToJsonConverter = dataToJsonConverterFactory
+				.createForDataElement(jsonBuilderFactory, dataRecord.getDataGroup());
+		JsonObjectBuilder jsonDataGroupObjectBuilder = dataToJsonConverter
+				.toJsonObjectBuilder(dataRecord.getDataGroup());
 		recordJsonObjectBuilder.addKeyJsonObjectBuilder("data", jsonDataGroupObjectBuilder);
 	}
 

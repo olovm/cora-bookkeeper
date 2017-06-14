@@ -74,22 +74,21 @@ public final class DataListToJsonConverter {
 		if (data instanceof DataRecord) {
 			convertRecordToJsonBuilder(recordsJsonBuilder, data);
 		} else {
-			convertGroupToJsonBuilder(recordsJsonBuilder, data);
+			convertGroupToJsonBuilder(recordsJsonBuilder, (DataGroup) data);
 		}
 	}
 
-	private void convertRecordToJsonBuilder(JsonArrayBuilder recordsJsonBuilder,
-			Data data) {
+	private void convertRecordToJsonBuilder(JsonArrayBuilder recordsJsonBuilder, Data data) {
 		DataRecordToJsonConverter converter = DataRecordToJsonConverter
 				.usingJsonFactoryForDataRecord(jsonBuilderFactory, (DataRecord) data);
 		recordsJsonBuilder.addJsonObjectBuilder(converter.toJsonObjectBuilder());
 	}
 
 	private void convertGroupToJsonBuilder(JsonArrayBuilder recordsJsonBuilder,
-			Data data) {
+			DataGroup dataGroup) {
 		DataGroupToJsonConverter converter = DataGroupToJsonConverter
-				.usingJsonFactoryForDataGroup(jsonBuilderFactory, (DataGroup) data);
-		recordsJsonBuilder.addJsonObjectBuilder(converter.toJsonObjectBuilder());
+				.usingJsonFactoryForDataGroup(jsonBuilderFactory);
+		recordsJsonBuilder.addJsonObjectBuilder(converter.toJsonObjectBuilder(dataGroup));
 	}
 
 }

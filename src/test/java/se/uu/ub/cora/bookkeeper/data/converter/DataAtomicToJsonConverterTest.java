@@ -35,12 +35,12 @@ public class DataAtomicToJsonConverterTest {
 	public void beforeMethod() {
 		dataAtomic = DataAtomic.withNameInDataAndValue("atomicNameInData", "atomicValue");
 		OrgJsonBuilderFactoryAdapter factory = new OrgJsonBuilderFactoryAdapter();
-		converter = DataAtomicToJsonConverter.usingJsonFactoryForDataAtomic(factory, dataAtomic);
+		converter = DataAtomicToJsonConverter.usingJsonFactory(factory);
 	}
 
 	@Test
 	public void testToJson() {
-		String json = converter.toJson();
+		String json = converter.toJson(dataAtomic);
 
 		String expectedJson = "{\n";
 		expectedJson += "    \"name\": \"atomicNameInData\",\n";
@@ -52,7 +52,7 @@ public class DataAtomicToJsonConverterTest {
 	@Test
 	public void testToJsonWithRepeatId() {
 		dataAtomic.setRepeatId("2");
-		String json = converter.toJson();
+		String json = converter.toJson(dataAtomic);
 		String expectedJson = "{\n";
 		expectedJson += "    \"repeatId\": \"2\",\n";
 		expectedJson += "    \"name\": \"atomicNameInData\",\n";
@@ -64,7 +64,7 @@ public class DataAtomicToJsonConverterTest {
 	@Test
 	public void testToJsonWithEmptyRepeatId() {
 		dataAtomic.setRepeatId("");
-		String json = converter.toJson();
+		String json = converter.toJson(dataAtomic);
 
 		String expectedJson = "{\n";
 		expectedJson += "    \"name\": \"atomicNameInData\",\n";
@@ -77,8 +77,8 @@ public class DataAtomicToJsonConverterTest {
 	public void testToJsonEmptyValue() {
 		DataAtomic dataAtomic = DataAtomic.withNameInDataAndValue("atomicNameInData", "");
 		OrgJsonBuilderFactoryAdapter factory = new OrgJsonBuilderFactoryAdapter();
-		converter = DataAtomicToJsonConverter.usingJsonFactoryForDataAtomic(factory, dataAtomic);
-		String json = converter.toJson();
+		converter = DataAtomicToJsonConverter.usingJsonFactory(factory);
+		String json = converter.toJson(dataAtomic);
 
 		String expectedJson = "{\n";
 		expectedJson += "    \"name\": \"atomicNameInData\",\n";

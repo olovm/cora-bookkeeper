@@ -20,7 +20,6 @@ package se.uu.ub.cora.bookkeeper.searchtermcollector;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNull;
 
 import java.util.List;
 

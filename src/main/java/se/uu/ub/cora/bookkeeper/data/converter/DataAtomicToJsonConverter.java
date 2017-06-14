@@ -20,6 +20,7 @@
 package se.uu.ub.cora.bookkeeper.data.converter;
 
 import se.uu.ub.cora.bookkeeper.data.DataAtomic;
+import se.uu.ub.cora.bookkeeper.data.DataPart;
 import se.uu.ub.cora.json.builder.JsonBuilderFactory;
 import se.uu.ub.cora.json.builder.JsonObjectBuilder;
 
@@ -28,18 +29,18 @@ public final class DataAtomicToJsonConverter extends DataToJsonConverter {
 	private DataAtomic dataAtomic;
 	private JsonBuilderFactory factory;
 
-	public static DataToJsonConverter usingJsonFactoryForDataAtomic(JsonBuilderFactory factory,
-			DataAtomic dataAtomic) {
-		return new DataAtomicToJsonConverter(factory, dataAtomic);
+	public static DataToJsonConverter usingJsonFactory(JsonBuilderFactory factory) {
+		return new DataAtomicToJsonConverter(factory);
 	}
 
-	private DataAtomicToJsonConverter(JsonBuilderFactory factory, DataAtomic dataAtomic) {
+	private DataAtomicToJsonConverter(JsonBuilderFactory factory) {
 		this.factory = factory;
-		this.dataAtomic = dataAtomic;
 	}
 
 	@Override
-	JsonObjectBuilder toJsonObjectBuilder() {
+	JsonObjectBuilder toJsonObjectBuilder(DataPart dataAtomicIn) {
+		this.dataAtomic = (DataAtomic) dataAtomicIn;
+
 		JsonObjectBuilder jsonObjectBuilder = factory.createObjectBuilder();
 
 		jsonObjectBuilder.addKeyString("name", dataAtomic.getNameInData());

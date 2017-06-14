@@ -20,15 +20,16 @@
 
 package se.uu.ub.cora.bookkeeper.data.converter;
 
+import se.uu.ub.cora.bookkeeper.data.DataPart;
 import se.uu.ub.cora.json.builder.JsonObjectBuilder;
 
 public abstract class DataToJsonConverter {
 
-	public String toJson() {
-		JsonObjectBuilder jsonObjectBuilder = toJsonObjectBuilder();
+	public String toJson(DataPart dataPart) {
+		JsonObjectBuilder jsonObjectBuilder = toJsonObjectBuilder(dataPart);
 		return jsonObjectBuilder.toJsonFormattedPrettyString();
 	}
 
-	abstract JsonObjectBuilder toJsonObjectBuilder();
+	abstract JsonObjectBuilder toJsonObjectBuilder(DataPart dataPart);
 
 }
